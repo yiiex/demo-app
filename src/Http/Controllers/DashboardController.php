@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Infrastructure\View\NavManager;
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\Inertia;
 
 final class DashboardController
 {

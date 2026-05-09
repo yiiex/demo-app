@@ -11,7 +11,7 @@ use App\Models\ProjectUser;
 use App\Policies\ProjectPolicy;
 use App\Policies\ProjectUserPolicy;
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\Inertia;
 use Yiisoft\Router\UrlGeneratorInterface;
 
 final class ProjectUserController

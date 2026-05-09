@@ -1,4 +1,8 @@
-<div id="modal"></div>
+<?php
+/**
+ * @var \Yiiex\Inertia\Inertia $inertia
+ */
+?>
 <div id="app"
-     data-page="<?= htmlspecialchars($_inertia->dataPage(), ENT_QUOTES, 'UTF-8', true) ?>"
+     data-page="<?= htmlspecialchars($inertia->dataPage(), ENT_QUOTES, 'UTF-8', true) ?>"
 ></div>

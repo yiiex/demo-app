@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\View;
 
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\Inertia;
 use Yiisoft\Yii\View\Renderer\CommonParametersInjectionInterface;
 
 class InertiaViewInjection implements CommonParametersInjectionInterface

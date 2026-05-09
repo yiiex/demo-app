@@ -4,10 +4,10 @@ namespace App\Infrastructure\Middlewares;
 
 use App\Infrastructure\View\NavManager;
 use App\Shared\ApplicationParams;
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\{Inertia, InertiaMiddleware as BaseInertiaMiddleware};
 use Yiisoft\User\CurrentUser;
 
-class InertiaMiddleware extends \Yii1x\Inertia\InertiaMiddleware
+class InertiaMiddleware extends BaseInertiaMiddleware
 {
     protected string $rootView {
         get => 'layouts/app.php';

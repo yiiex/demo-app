@@ -44,8 +44,8 @@
         "psr/log": "^3.0.2",
         "symfony/console": "^7.4.1",
         "yii1x/active-record": "dev-master",
-        "yii1x/inertiajs": "dev-master",
         "yii1x/validator": "dev-master",
+        "yiiex/inertiajs": "dev-master",
         "yiisoft/aliases": "^3.1.1",
         "yiisoft/assets": "^5.1.2",
         "yiisoft/config": "^1.6.2",
@@ -132,10 +132,10 @@
         },
         {
             "type": "path",
-            "url": "packages/yii1x/inertiajs",
+            "url": "packages/yiiex/inertiajs",
             "options": {
                 "versions": {
-                    "yii1x/inertiajs": "dev-master"
+                    "yiiex/inertiajs": "dev-master"
                 }
             }
         }

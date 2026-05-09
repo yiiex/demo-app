@@ -13,7 +13,7 @@ use App\Policies\UserPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\Inertia;
 use Yiisoft\Router\UrlGeneratorInterface;
 
 final class UserController

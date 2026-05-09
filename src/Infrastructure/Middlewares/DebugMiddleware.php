@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\Inertia;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Yii\Debug\Debugger;
 

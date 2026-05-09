@@ -13,7 +13,7 @@ use App\Policies\TaskCommentPolicy;
 use App\Policies\TaskPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
-use Yii1x\Inertia\Inertia;
+use Yiiex\Inertia\Inertia;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\User\CurrentUser;
 
