@@ -9,6 +9,7 @@ use App\Infrastructure\Filter\UserFilter;
 use App\Infrastructure\Form\FormData;
 use App\Infrastructure\View\NavManager;
 use App\Models\User;
+use App\Policies\UserPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -44,7 +45,7 @@ final class UserController
     }
 
     public function show(
-        #[ModelContext(User::class, 'user')]
+        #[ModelContext(User::class, 'user', scenario: 'view', policy: UserPolicy::class)]
         User       $user,
         Inertia    $inertia,
         NavManager $nav,
@@ -60,7 +61,7 @@ final class UserController
     }
 
     public function create(
-        #[ModelContext(User::class, scenario: 'insert')]
+        #[ModelContext(User::class, scenario: 'insert', policy: UserPolicy::class)]
         User                  $user,
         NavManager            $nav,
         Inertia               $inertia,
@@ -78,7 +79,7 @@ final class UserController
     }
 
     public function store(
-        #[ModelContext(User::class, scenario: 'insert')]
+        #[ModelContext(User::class, scenario: 'insert', policy: UserPolicy::class)]
         User                   $user,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -96,7 +97,7 @@ final class UserController
     }
 
     public function edit(
-        #[ModelContext(User::class, 'user', scenario: 'update')]
+        #[ModelContext(User::class, 'user', scenario: 'update', policy: UserPolicy::class)]
         User                  $user,
         NavManager            $nav,
         Inertia               $inertia,
@@ -114,7 +115,7 @@ final class UserController
     }
 
     public function update(
-        #[ModelContext(User::class, 'user', scenario: 'update')]
+        #[ModelContext(User::class, 'user', scenario: 'update', policy: UserPolicy::class)]
         User                   $user,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -132,7 +133,7 @@ final class UserController
     }
 
     public function destroy(
-        #[ModelContext(User::class, 'user')]
+        #[ModelContext(User::class, 'user', scenario: 'delete', policy: UserPolicy::class)]
         User                  $user,
         UrlGeneratorInterface $url,
         ResponseHelper        $response,

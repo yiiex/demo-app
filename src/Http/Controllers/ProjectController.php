@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Attributes\ModelContext;
 use App\Http\Helpers\ResponseHelper;
+use App\Policies\ProjectPolicy;
 use App\Infrastructure\ActionProviders\{ProjectActions, ProjectUserActions};
 use App\Infrastructure\Filter\ProjectFilter;
 use App\Infrastructure\Filter\ProjectUserFilter;
@@ -48,7 +49,7 @@ final class ProjectController
     }
 
     public function show(
-        #[ModelContext(Project::class, 'project', scenario: 'view')]
+        #[ModelContext(Project::class, 'project', scenario: 'view', policy: ProjectPolicy::class)]
         Project                $project,
         Inertia                $inertia,
         NavManager             $nav,
@@ -82,6 +83,8 @@ final class ProjectController
     }
 
     public function create(
+        #[ModelContext(Project::class, 'project', scenario: 'insert', policy: ProjectPolicy::class)]
+        Project               $project,
         NavManager            $nav,
         Inertia               $inertia,
         UrlGeneratorInterface $url,
@@ -93,13 +96,13 @@ final class ProjectController
             ->addBreadcrumb('Create', ['project.create']);
 
         return $inertia->render('Project/Form', [
-            'form' => $formData->setModel(new Project()),
+            'form' => $formData->setModel($project),
             'saveUrl' => $url->generate('project.store'),
         ]);
     }
 
     public function store(
-        #[ModelContext(Project::class, scenario: 'insert')]
+        #[ModelContext(Project::class, scenario: 'insert', policy: ProjectPolicy::class)]
         Project                $project,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -121,7 +124,7 @@ final class ProjectController
     }
 
     public function edit(
-        #[ModelContext(Project::class, 'project', scenario: 'update')]
+        #[ModelContext(Project::class, 'project', scenario: 'update', policy: ProjectPolicy::class)]
         Project               $project,
         NavManager            $nav,
         Inertia               $inertia,
@@ -140,7 +143,7 @@ final class ProjectController
     }
 
     public function update(
-        #[ModelContext(Project::class, 'project', scenario: 'update')]
+        #[ModelContext(Project::class, 'project', scenario: 'update', policy: ProjectPolicy::class)]
         Project                $project,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -160,7 +163,7 @@ final class ProjectController
     }
 
     public function destroy(
-        #[ModelContext(Project::class, 'project', scenario: 'update')]
+        #[ModelContext(Project::class, 'project', scenario: 'delete', policy: ProjectPolicy::class)]
         Project               $project,
         UrlGeneratorInterface $url,
         ResponseHelper        $response,

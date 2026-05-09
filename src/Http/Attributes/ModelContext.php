@@ -13,6 +13,7 @@ readonly class ModelContext implements ParameterAttributeInterface
         public ?string $routeKey = null,
         public array   $with = [],
         public ?string $scenario = null,
+        public ?string $policy = null,
     ) {}
 
     public function getResolver(): string

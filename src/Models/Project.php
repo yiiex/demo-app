@@ -46,6 +46,11 @@ class Project extends BaseModel
         return $this->user_id === $user->id;
     }
 
+    public function isMember(User $user): bool
+    {
+        return $this->user_links_r && array_any($this->user_links_r, fn($link) => $link->user_id == $user->id);
+    }
+
     public function attributeLabels(): array
     {
         return [

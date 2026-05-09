@@ -2,7 +2,6 @@
 
 namespace App\Debug;
 
-use Psr\EventDispatcher\ListenerProviderInterface;
 use Yii1x\ActiveRecord\Events\EndQueryEvent;
 use Yiisoft\Yii\Debug\Collector\CollectorInterface;
 use Yiisoft\Yii\Debug\Collector\CollectorTrait;
@@ -12,11 +11,6 @@ class QueryCollector implements CollectorInterface
     use CollectorTrait;
 
     protected array $queries = [];
-
-    public function __construct(protected ListenerProviderInterface $listenerProvider)
-    {
-
-    }
 
     public function listenQuery(EndQueryEvent $event): void
     {

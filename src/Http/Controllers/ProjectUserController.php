@@ -8,31 +8,26 @@ use App\Infrastructure\Form\FormData;
 use App\Infrastructure\View\NavManager;
 use App\Models\Project;
 use App\Models\ProjectUser;
+use App\Policies\ProjectPolicy;
+use App\Policies\ProjectUserPolicy;
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 use Yii1x\Inertia\Inertia;
 use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\User\CurrentUser;
 
 final class ProjectUserController
 {
 
     public function create(
-        #[ModelContext(Project::class, 'project', scenario: 'insert')]
+        #[ModelContext(Project::class, 'project', scenario: 'addUser', policy: ProjectPolicy::class)]
         Project               $project,
         #[ModelContext(ProjectUser::class, scenario: 'insert')]
         ProjectUser           $projectUser,
         NavManager            $nav,
         Inertia               $inertia,
         UrlGeneratorInterface $url,
-        ResponseHelper        $response,
         FormData              $formData,
-        CurrentUser           $user,
     ): ResponseInterface
     {
-        if (!$project->isOwner($user->getIdentity())) {
-            return $response->error(403, 'Access denied');
-        }
-
         $nav
             ->setTitle('Add user')
             ->addBreadcrumb($project->name, ['project.show', ['project' => $project->id]])
@@ -45,20 +40,15 @@ final class ProjectUserController
     }
 
     public function store(
-        #[ModelContext(Project::class, 'project', scenario: 'insert')]
+        #[ModelContext(Project::class, 'project', scenario: 'addUser', policy: ProjectPolicy::class)]
         Project                $project,
         #[ModelContext(ProjectUser::class, scenario: 'insert')]
         ProjectUser            $projectUser,
         ServerRequestInterface $request,
-        ResponseHelper         $response,
         UrlGeneratorInterface  $url,
-        CurrentUser            $user,
         FormData               $form,
     ): ResponseInterface
     {
-        if (!$project->isOwner($user->getIdentity())) {
-            return $response->error(403, 'Access denied');
-        }
         $projectUser->project_id = $project->id;
         return $form
             ->setModel($projectUser)
@@ -71,16 +61,12 @@ final class ProjectUserController
     }
 
     public function destroy(
-        #[ModelContext(ProjectUser::class, 'user', with: ['project_r'])]
+        #[ModelContext(ProjectUser::class, 'user', with: ['project_r'], scenario: 'delete', policy: ProjectUserPolicy::class)]
         ProjectUser           $projectUser,
         UrlGeneratorInterface $url,
         ResponseHelper        $response,
-        CurrentUser           $user,
     ): ResponseInterface
     {
-        if (!$projectUser->project_r?->isOwner($user->getIdentity())) {
-            return $response->error(403, 'Access denied');
-        }
         return $response->json([
             'success' => $success = !!$projectUser->delete(),
             'message' => $success ? 'User deleted.' : 'User not deleted.',

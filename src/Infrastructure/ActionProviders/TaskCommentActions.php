@@ -4,6 +4,7 @@ namespace App\Infrastructure\ActionProviders;
 
 use App\Models\TaskComment;
 use App\Models\User;
+use App\Policies\TaskCommentPolicy;
 use App\Shared\ActionProvider\Action;
 use App\Shared\ActionProvider\SimpleActionProvider;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -13,7 +14,8 @@ class TaskCommentActions extends SimpleActionProvider
 {
     public function __construct(
         protected UrlGeneratorInterface $urlGenerator,
-        protected CurrentUser           $user
+        protected CurrentUser           $user,
+        protected TaskCommentPolicy     $policy,
     )
     {
     }
@@ -24,15 +26,11 @@ class TaskCommentActions extends SimpleActionProvider
      */
     public function actions($model): array
     {
-        $isExisting = fn(?TaskComment $entry) => !$entry?->isNewRecord;
-        $canEdit = fn(?TaskComment $entry, ?CurrentUser $user) => $isExisting($entry)
-            && ($entry?->user_id == $user?->getId() || $user->getIdentity()->can(User::ROLE_ADMIN));
-
         return [
             Action::new('edit')
                 ->title('Edit')
                 ->url(fn(?TaskComment $entry) => $this->urlGenerator->generate('taskComment.edit', ['comment' => $entry?->id]))
-                ->visible($canEdit),
+                ->visible(fn() => $this->policy->update($model, $this->user)),
 
             Action::new('destroy')
                 ->title('Delete')
@@ -42,7 +40,7 @@ class TaskCommentActions extends SimpleActionProvider
                 ->async()
                 ->variant('destructive')
                 ->url(fn(?TaskComment $entry) => $this->urlGenerator->generate('taskComment.destroy', ['comment' => $entry?->id]))
-                ->visible($canEdit),
+                ->visible(fn() => $this->policy->delete($model, $this->user)),
         ];
     }
 }

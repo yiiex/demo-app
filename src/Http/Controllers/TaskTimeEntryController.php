@@ -9,6 +9,8 @@ use App\Infrastructure\Form\FormData;
 use App\Infrastructure\View\NavManager;
 use App\Models\Task;
 use App\Models\TaskTimeEntry;
+use App\Policies\TaskPolicy;
+use App\Policies\TaskTimeEntryPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 use Yii1x\Inertia\Inertia;
@@ -18,7 +20,7 @@ use Yiisoft\User\CurrentUser;
 final class TaskTimeEntryController
 {
     public function index(
-        #[ModelContext(Task::class, 'task', scenario: 'update')]
+        #[ModelContext(Task::class, 'task', scenario: 'view', policy: TaskPolicy::class)]
         Task                   $task,
         ServerRequestInterface $request,
         ResponseHelper         $response,
@@ -42,7 +44,7 @@ final class TaskTimeEntryController
     }
 
     public function create(
-        #[ModelContext(Task::class, 'task', scenario: 'update')]
+        #[ModelContext(Task::class, 'task', scenario: 'logWork', policy: TaskPolicy::class)]
         Task                  $task,
         #[ModelContext(TaskTimeEntry::class, scenario: 'insert')]
         TaskTimeEntry         $entry,
@@ -64,7 +66,7 @@ final class TaskTimeEntryController
     }
 
     public function store(
-        #[ModelContext(Task::class, 'task', scenario: 'update')]
+        #[ModelContext(Task::class, 'task', scenario: 'logWork', policy: TaskPolicy::class)]
         Task                   $task,
         #[ModelContext(TaskTimeEntry::class, scenario: 'insert')]
         TaskTimeEntry          $entry,
@@ -88,7 +90,7 @@ final class TaskTimeEntryController
     }
 
     public function edit(
-        #[ModelContext(TaskTimeEntry::class, 'time', scenario: 'update')]
+        #[ModelContext(TaskTimeEntry::class, 'time', scenario: 'update', policy: TaskTimeEntryPolicy::class)]
         TaskTimeEntry         $entry,
         Inertia               $inertia,
         UrlGeneratorInterface $url,
@@ -108,7 +110,7 @@ final class TaskTimeEntryController
     }
 
     public function update(
-        #[ModelContext(TaskTimeEntry::class, 'time', scenario: 'update')]
+        #[ModelContext(TaskTimeEntry::class, 'time', scenario: 'update', policy: TaskTimeEntryPolicy::class)]
         TaskTimeEntry          $entry,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -126,7 +128,7 @@ final class TaskTimeEntryController
     }
 
     public function destroy(
-        #[ModelContext(TaskTimeEntry::class, 'time', scenario: 'update')]
+        #[ModelContext(TaskTimeEntry::class, 'time', scenario: 'delete', policy: TaskTimeEntryPolicy::class)]
         TaskTimeEntry         $entry,
         ResponseHelper        $response,
         UrlGeneratorInterface $url,

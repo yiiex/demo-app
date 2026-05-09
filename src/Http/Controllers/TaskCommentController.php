@@ -9,6 +9,8 @@ use App\Infrastructure\Form\FormData;
 use App\Infrastructure\View\NavManager;
 use App\Models\Task;
 use App\Models\TaskComment;
+use App\Policies\TaskCommentPolicy;
+use App\Policies\TaskPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 use Yii1x\Inertia\Inertia;
@@ -18,7 +20,7 @@ use Yiisoft\User\CurrentUser;
 final class TaskCommentController
 {
     public function index(
-        #[ModelContext(Task::class, 'task')]
+        #[ModelContext(Task::class, 'task', scenario: 'view', policy: TaskPolicy::class)]
         Task                   $task,
         ServerRequestInterface $request,
         ResponseHelper         $response,
@@ -42,7 +44,7 @@ final class TaskCommentController
     }
 
     public function store(
-        #[ModelContext(Task::class, 'task')]
+        #[ModelContext(Task::class, 'task', scenario: 'view', policy: TaskPolicy::class)]
         Task                   $task,
         #[ModelContext(TaskComment::class, scenario: 'insert')]
         TaskComment            $comment,
@@ -68,7 +70,7 @@ final class TaskCommentController
     }
 
     public function edit(
-        #[ModelContext(TaskComment::class, 'comment', ['task_r'], scenario: 'update')]
+        #[ModelContext(TaskComment::class, 'comment', ['task_r'], scenario: 'update', policy: TaskCommentPolicy::class)]
         TaskComment           $comment,
         NavManager            $nav,
         Inertia               $inertia,
@@ -87,7 +89,7 @@ final class TaskCommentController
     }
 
     public function update(
-        #[ModelContext(TaskComment::class, 'comment', ['task_r'], scenario: 'update')]
+        #[ModelContext(TaskComment::class, 'comment', ['task_r'], scenario: 'update', policy: TaskCommentPolicy::class)]
         TaskComment            $comment,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -106,7 +108,7 @@ final class TaskCommentController
 
 
     public function destroy(
-        #[ModelContext(TaskComment::class, 'comment')]
+        #[ModelContext(TaskComment::class, 'comment', scenario: 'delete', policy: TaskCommentPolicy::class)]
         TaskComment    $comment,
         ResponseHelper $response,
         CurrentUser    $user,

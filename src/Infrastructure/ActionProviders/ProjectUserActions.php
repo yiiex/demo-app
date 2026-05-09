@@ -3,7 +3,9 @@
 namespace App\Infrastructure\ActionProviders;
 
 use App\Models\ProjectUser;
+use App\Policies\ProjectPolicy;
 use App\Shared\ActionProvider\{Action, SimpleActionProvider};
+use App\Policies\ProjectUserPolicy;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\User\CurrentUser;
 
@@ -11,7 +13,8 @@ class ProjectUserActions extends SimpleActionProvider
 {
     public function __construct(
         protected UrlGeneratorInterface $urlGenerator,
-        protected CurrentUser $user
+        protected CurrentUser $user,
+        protected ProjectUserPolicy $policy,
     ) {}
 
     /**
@@ -25,9 +28,7 @@ class ProjectUserActions extends SimpleActionProvider
                 ->title('Add User')
                 ->variant('outline')
                 ->url(fn(?ProjectUser $projectUser) => $this->urlGenerator->generate('project.user.create', ['project' => $projectUser?->project_r?->id]))
-                ->visible(fn(?ProjectUser $projectUser, ?CurrentUser $user) =>
-                    $projectUser?->project_r?->isOwner($user->getIdentity()) && $projectUser?->isNewRecord
-                ),
+                ->visible(fn() => $this->policy->insert($model, $this->user)),
 
             Action::new('destroy')
                 ->title('Delete')
@@ -37,9 +38,7 @@ class ProjectUserActions extends SimpleActionProvider
                 ->async()
                 ->variant('destructive')
                 ->url(fn(?ProjectUser $projectUser) => $this->urlGenerator->generate('project.user.destroy', ['user' => $projectUser?->id]))
-                ->visible(fn(?ProjectUser $projectUser, ?CurrentUser $user) =>
-                    $projectUser?->project_r?->isOwner($user->getIdentity()) && !$projectUser?->isNewRecord
-                ),
+                ->visible(fn() => $this->policy->delete($model, $this->user)),
         ];
     }
 }

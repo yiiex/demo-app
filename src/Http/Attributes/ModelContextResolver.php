@@ -2,17 +2,22 @@
 
 namespace App\Http\Attributes;
 
-use App\Http\Exceptions\{NotFoundException};
-use App\Http\Helpers\RequestHelper;
+use App\Http\Exceptions\{ForbiddenException, NotFoundException};
 use Yiisoft\Hydrator\Attribute\Parameter\{ParameterAttributeInterface, ParameterAttributeResolverInterface};
 use Yiisoft\Hydrator\AttributeHandling\Exception\UnexpectedAttributeException;
 use Yiisoft\Hydrator\AttributeHandling\ParameterAttributeResolveContext;
 use Yiisoft\Hydrator\Result;
+use Yiisoft\Injector\Injector;
 use Yiisoft\Router\CurrentRoute;
+use Yiisoft\User\CurrentUser;
 
 final readonly class ModelContextResolver implements ParameterAttributeResolverInterface
 {
-    public function __construct(private CurrentRoute  $currentRoute)
+    public function __construct(
+        private CurrentRoute $currentRoute,
+        private Injector     $injector,
+        private CurrentUser  $user,
+    )
     {
     }
 
@@ -38,6 +43,11 @@ final readonly class ModelContextResolver implements ParameterAttributeResolverI
         }
         if ($attribute->scenario) {
             $model->setScenario($attribute->scenario);
+            if ($attribute->policy && ($policy = $this->injector->make($attribute->policy))
+                && method_exists($policy, $attribute->scenario)
+                && !$policy->{$attribute->scenario}($model, $this->user)) {
+                throw new ForbiddenException('Access denied');
+            }
         }
         return Result::success($model);
     }

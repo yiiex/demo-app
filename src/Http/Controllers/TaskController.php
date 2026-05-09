@@ -11,6 +11,7 @@ use App\Infrastructure\Form\TaskFormData;
 use App\Infrastructure\View\NavManager;
 use App\Models\Task;
 use App\Models\TaskComment;
+use App\Policies\TaskPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -49,7 +50,7 @@ final class TaskController
     public function show(
         #[ModelContext(Task::class, 'task', [
             'project_r', 'user_links_r' => ['with' => ['time_summary', 'user']], 'spent_time',
-        ], scenario: 'view')]
+        ], scenario: 'view', policy: TaskPolicy::class)]
         Task                  $task,
         Inertia               $inertia,
         NavManager            $nav,
@@ -75,7 +76,7 @@ final class TaskController
     }
 
     public function create(
-        #[ModelContext(Task::class, 'task', scenario: 'insert')]
+        #[ModelContext(Task::class, 'task', scenario: 'insert', policy: TaskPolicy::class)]
         Task                  $task,
         NavManager            $nav,
         Inertia               $inertia,
@@ -93,7 +94,7 @@ final class TaskController
     }
 
     public function store(
-        #[ModelContext(Task::class, 'task', scenario: 'insert')]
+        #[ModelContext(Task::class, 'task', scenario: 'insert', policy: TaskPolicy::class)]
         Task                   $task,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -111,7 +112,7 @@ final class TaskController
     }
 
     public function edit(
-        #[ModelContext(Task::class, 'task', scenario: 'update')]
+        #[ModelContext(Task::class, 'task', scenario: 'update', policy: TaskPolicy::class)]
         Task                  $task,
         NavManager            $nav,
         Inertia               $inertia,
@@ -130,7 +131,7 @@ final class TaskController
     }
 
     public function update(
-        #[ModelContext(Task::class, 'task', scenario: 'update')]
+        #[ModelContext(Task::class, 'task', scenario: 'update', policy: TaskPolicy::class)]
         Task                   $task,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,
@@ -161,7 +162,7 @@ final class TaskController
     }
 
     public function take(
-        #[ModelContext(Task::class, 'task', scenario: 'take')]
+        #[ModelContext(Task::class, 'task', scenario: 'take', policy: TaskPolicy::class)]
         Task                  $task,
         ResponseHelper        $response,
         UrlGeneratorInterface $url,
@@ -171,7 +172,7 @@ final class TaskController
     }
 
     public function complete(
-        #[ModelContext(Task::class, 'task', scenario: 'complete')]
+        #[ModelContext(Task::class, 'task', scenario: 'complete', policy: TaskPolicy::class)]
         Task                  $task,
         ResponseHelper        $response,
         UrlGeneratorInterface $url,
@@ -181,7 +182,7 @@ final class TaskController
     }
 
     public function return(
-        #[ModelContext(Task::class, 'task', scenario: 'return')]
+        #[ModelContext(Task::class, 'task', scenario: 'return', policy: TaskPolicy::class)]
         Task                  $task,
         ResponseHelper        $response,
         UrlGeneratorInterface $url,
@@ -191,7 +192,7 @@ final class TaskController
     }
 
     public function destroy(
-        #[ModelContext(Task::class, 'task')]
+        #[ModelContext(Task::class, 'task', scenario: 'delete', policy: TaskPolicy::class)]
         Task                  $task,
         UrlGeneratorInterface $url,
         ResponseHelper        $response,
