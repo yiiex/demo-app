@@ -43,6 +43,20 @@ class TaskTimeEntry extends BaseModel
         ];
     }
 
+    public function period(string $period): static
+    {
+        $query = self::queryBuilder($this->dbCriteria);
+        $dateColumn = implode('.', [$this->tableAlias, 'date']);
+        match ($period) {
+            'today' => $query->where($dateColumn, '=', date('Y-m-d')),
+            'week' => $query
+                ->where($dateColumn, '>=', date('Y-m-d', strtotime('monday this week')))
+                ->where($dateColumn, '<=', date('Y-m-d', strtotime('sunday this week'))),
+            default => throw new \InvalidArgumentException("Unknown period: $period"),
+        };
+        return $this;
+    }
+
     public function attributeLabels(): array
     {
         return [

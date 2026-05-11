@@ -15,7 +15,7 @@ use Yiisoft\Yii\Debug\Debugger;
 class DebugMiddleware implements MiddlewareInterface
 {
     public bool $isDebug {
-        get => $this->env->isDebug() && $this->user->getIdentity()->can(User::ROLE_ADMIN);
+        get => $this->env->isDebug() && !$this->user->isGuest() && $this->user->getIdentity()->can(User::ROLE_ADMIN);
     }
 
     public function __construct(

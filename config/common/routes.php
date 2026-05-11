@@ -34,6 +34,7 @@ return [
         Route::get('/')->action([DashboardController::class, 'index'])->name('home'),
         Group::create('/dashboard')->routes(
             Route::get('/')->action([DashboardController::class, 'index'])->name('dashboard.index'),
+            Route::get('/tasks')->action([DashboardController::class, 'tasks'])->name('dashboard.tasks'),
         ),
         Group::create('/user')->routes(
             Route::get('/index')->action([UserController::class, 'index'])->name('user.index'),

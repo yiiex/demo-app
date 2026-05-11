@@ -1,7 +1,6 @@
 <script setup>
-import {Avatar, AvatarFallback, AvatarImage} from "@js/components/ui/avatar/index.ts";
-import {computed, useSlots} from "vue";
-import {useAuth} from "@js/composables/useAuth.ts";
+import {computed, inject, useSlots} from "vue";
+import UserAvatar from "@js/components/user/UserAvatar.vue";
 
 const props = defineProps({
     user: {
@@ -11,7 +10,6 @@ const props = defineProps({
 });
 
 const slots = useSlots();
-const {defaultAvatar} = useAuth();
 
 const hasDescription = computed(() => !!slots.description);
 const hasRight = computed(() => !!slots.right);
@@ -19,18 +17,17 @@ const hasRight = computed(() => !!slots.right);
 const fullName = computed(() => {
     return props.user?.fullName || 'undefined';
 });
+const link = inject('link', null);
 </script>
 
 <template>
     <div class="flex items-center gap-2">
-        <Avatar>
-            <AvatarImage :src="user?.avatar || defaultAvatar"/>
-            <AvatarFallback>{{ fullName }}</AvatarFallback>
-        </Avatar>
+        <UserAvatar :user="user"/>
         <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
                 <slot name="name">
-                    <span class="text-sm! font-medium truncate">{{ fullName }}</span>
+                    <Link v-if="link && link.url" :href="link.url" class="text-sm! font-medium truncate hover:underline">{{ fullName }}</Link>
+                    <span v-else class="text-sm! font-medium truncate">{{ fullName }}</span>
                 </slot>
                 <slot v-if="hasRight" name="right"/>
             </div>

@@ -11,7 +11,8 @@ use Yiisoft\User\CurrentUser;
 class TaskFilter extends Filter
 {
     public ?string $search = null;
-    public array $with = ['user_links_r'];
+    public ?bool $myTasks = null;
+    public array $with = ['users_r'];
 
     public function __construct(protected CurrentUser $user)
     {
@@ -34,6 +35,19 @@ class TaskFilter extends Filter
                     ->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb
                         ->where('user_links_r.user_id', $this->user->getId()), 'OR');
             });
+        }
+        return $queryBuilder;
+    }
+
+    #[FilterMethod(
+        rules: [['myTasks', 'boolean', 'allowEmpty' => true, 'on' => 'filter']],
+    )]
+    public function myTasks(QueryBuilder $queryBuilder): QueryBuilder
+    {
+        if ($this->myTasks) {
+            $queryBuilder
+                ->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb
+                    ->where('user_links_r.user_id', $this->user->getId()));
         }
         return $queryBuilder;
     }

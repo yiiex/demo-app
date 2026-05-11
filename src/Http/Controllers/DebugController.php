@@ -7,7 +7,7 @@ use App\Http\Helpers\ResponseHelper;
 use App\Models\DebugLog;
 use App\Policies\DebugLogPolicy;
 
-class DebugController
+final class DebugController
 {
     public function show(
         #[ModelContext(DebugLog::class, 'debug', scenario: 'view', policy: DebugLogPolicy::class)]

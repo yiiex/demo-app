@@ -8,7 +8,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@js/components/ui/tabs/i
 import {Clock2, ListPlusIcon, MessageSquare, OctagonAlert} from '@lucide/vue';
 import {Alert, AlertDescription} from "@js/components/ui/alert/index.ts";
 import {UTable, UTableColumn} from "@js/components/ui/utable/index.ts";
-import UserInfo from "@js/components/UserInfo.vue";
+import UserInfo from "@js/components/user/UserInfo.vue";
 import UList from "@js/components/ui/udata/UList.vue";
 import CommentForm from "@js/pages/TaskComment/Components/CommentForm.vue";
 import {Badge} from "@js/components/ui/badge/index.ts";

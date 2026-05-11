@@ -4,14 +4,12 @@ import {
     Bell,
     Check,
     ChevronsUpDown,
-    CreditCard,
     LogOut,
     Monitor,
     Moon,
     Palette,
     Sun,
 } from "lucide-vue-next";
-import {Avatar, AvatarFallback, AvatarImage,} from "@/js/components/ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -27,9 +25,10 @@ import {
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@/js/components/ui/sidebar";
 import {useAuth} from "@js/composables/useAuth.ts";
 import {useTheme} from "@js/composables/useTheme.ts";
+import UserAvatar from "@js/components/user/UserAvatar.vue";
 
 const {isMobile} = useSidebar();
-const {user, avatar, logoutDialog} = useAuth();
+const {user, logoutDialog} = useAuth();
 const {currentTheme, setTheme} = useTheme();
 
 </script>
@@ -43,12 +42,7 @@ const {currentTheme, setTheme} = useTheme();
                         size="lg"
                         class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                     >
-                        <Avatar class="h-8 w-8 rounded-lg">
-                            <AvatarImage :src="avatar" :alt="user?.fullName"/>
-                            <AvatarFallback class="rounded-lg">
-                                CN
-                            </AvatarFallback>
-                        </Avatar>
+                        <UserAvatar :user="user" />
                         <div class="grid flex-1 text-left text-sm leading-tight">
                             <span class="truncate font-medium">{{ user?.fullName }}</span>
                             <span class="truncate text-xs">{{ user?.email }}</span>
@@ -64,12 +58,7 @@ const {currentTheme, setTheme} = useTheme();
                 >
                     <DropdownMenuLabel class="p-0 font-normal">
                         <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                            <Avatar class="h-8 w-8 rounded-lg">
-                                <AvatarImage :src="avatar" :alt="user?.fullName"/>
-                                <AvatarFallback class="rounded-lg">
-                                    CN
-                                </AvatarFallback>
-                            </Avatar>
+                            <UserAvatar :user="user" />
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">{{ user?.fullName }}</span>
                                 <span class="truncate text-xs">{{ user?.email }}</span>
@@ -106,10 +95,6 @@ const {currentTheme, setTheme} = useTheme();
                         <DropdownMenuItem @click="$inertia.visit('/user/show/' + user?.id)">
                             <BadgeCheck/>
                             Account
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <CreditCard/>
-                            Billing
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Bell/>

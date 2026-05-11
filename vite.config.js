@@ -10,6 +10,14 @@ export default defineConfig({
         hmr: {
             host: 'localhost',
         },
+        watch: {
+            ignored: [
+                '**/vendor/**',
+                '**/node_modules/**',
+                '**/runtime/**',
+                '**/.git/**',
+            ]
+        },
     },
     plugins: [
         laravel({

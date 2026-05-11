@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "015508a34d850413e1483251670b8295",
+    "content-hash": "5902fee0b8cd98cf88b0b4683e6ab78d",
     "packages": [
         {
             "name": "alexkart/curl-builder",
@@ -1487,7 +1487,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yiiex/inertiajs",
-                "reference": "e29e1913024b256f4505010f769d6928d16ac595"
+                "reference": "f4bc865cf6bfbe7e052f63c2be1b55d970e7617b"
             },
             "require": {
                 "php": "^8.3",
@@ -1495,12 +1495,18 @@
                 "yiisoft/yii-view-renderer": "^7.3"
             },
             "require-dev": {
+                "httpsoft/http-message": "^1.1",
                 "phpunit/phpunit": "^12.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Yiiex\\Inertia\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Yiiex\\Inertia\\Tests\\": "tests/"
                 }
             },
             "authors": [
@@ -1969,6 +1975,76 @@
                 }
             ],
             "time": "2025-12-11T05:44:17+00:00"
+        },
+        {
+            "name": "yiisoft/cache-apcu",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/cache-apcu.git",
+                "reference": "5f6b400ad4a71da1460039bbb6f4566758744bd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/cache-apcu/zipball/5f6b400ad4a71da1460039bbb6f4566758744bd0",
+                "reference": "5f6b400ad4a71da1460039bbb6f4566758744bd0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-apcu": "*",
+                "php": "^8.0",
+                "psr/simple-cache": "^2.0|^3.0"
+            },
+            "provide": {
+                "psr/simple-cache-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.92.5",
+                "phpunit/phpunit": "^9.5",
+                "rector/rector": "^2.3.0",
+                "roave/infection-static-analysis-plugin": "^1.16",
+                "spatie/phpunit-watcher": "^1.23",
+                "vimeo/psalm": "^4.30|^5.25"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yiisoft\\Cache\\Apcu\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Yii Caching Library - APCu Handler",
+            "homepage": "https://www.yiiframework.com/",
+            "keywords": [
+                "apcu",
+                "cache",
+                "framework",
+                "psr-16",
+                "yii"
+            ],
+            "support": {
+                "chat": "https://t.me/yii3en",
+                "forum": "https://www.yiiframework.com/forum/",
+                "irc": "ircs://irc.libera.chat:6697/yii",
+                "issues": "https://github.com/yiisoft/cache-apcu/issues?state=open",
+                "source": "https://github.com/yiisoft/cache-apcu",
+                "wiki": "https://www.yiiframework.com/wiki/"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/yiisoft",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/yiisoft",
+                    "type": "opencollective"
+                }
+            ],
+            "time": "2026-01-30T13:42:24+00:00"
         },
         {
             "name": "yiisoft/config",
@@ -14770,6 +14846,7 @@
         "yii1x/active-record": 20,
         "yii1x/validator": 20,
         "yiiex/inertiajs": 20,
+        "yiisoft/cache-apcu": 20,
         "yiisoft/user": 20,
         "yiisoft/yii-debug": 20
     },

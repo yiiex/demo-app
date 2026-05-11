@@ -48,6 +48,7 @@
         "yiiex/inertiajs": "dev-master",
         "yiisoft/aliases": "^3.1.1",
         "yiisoft/assets": "^5.1.2",
+        "yiisoft/cache-apcu": "^1.1.0",
         "yiisoft/config": "^1.6.2",
         "yiisoft/csrf": "^2.2.3",
         "yiisoft/data-response": "^2.1.2",

@@ -23,3 +23,28 @@ export function useDelayedRef(initial: boolean, delay: number = 200) {
         }
     })
 }
+
+export function useDelayedLoading(keys: string[], delay: number = 200) {
+    const loadings = Object.fromEntries(
+        keys.map(key => [key, useDelayedRef(false, delay)])
+    ) as Record<string, ReturnType<typeof useDelayedRef>>
+
+    const setLoading = (key: string, value: boolean) => {
+        if (loadings[key]) {
+            loadings[key].value = value
+        }
+    }
+
+    const isLoading = (key: string) => loadings[key]?.value ?? false
+
+    const anyLoading = computed(() =>
+        Object.values(loadings).some(l => l.value)
+    )
+
+    return {
+        loadings,
+        setLoading,
+        isLoading,
+        anyLoading,
+    }
+}

@@ -21,12 +21,15 @@ RUN apt-get update && apt-get install -y \
       apt-get clean && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install APCu
+RUN pecl install apcu && \
+    docker-php-ext-enable apcu
+
 # Install Xdebug
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
 
 COPY ./_docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
-COPY ./_docker/app/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Install composer
 ENV COMPOSER_ALLOW_SUPERUSER=1

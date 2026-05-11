@@ -54,9 +54,6 @@ final class TaskCommentController
 
     ): ResponseInterface
     {
-        $comment->task_id = $task->id;
-        $comment->user_id = $user->getId();
-
         return $form
             ->setModel($comment)
             ->setAttributes(array_merge($request->getParsedBody(), [
@@ -111,13 +108,8 @@ final class TaskCommentController
         #[ModelContext(TaskComment::class, 'comment', scenario: 'delete', policy: TaskCommentPolicy::class)]
         TaskComment    $comment,
         ResponseHelper $response,
-        CurrentUser    $user,
     ): ResponseInterface
     {
-        if ($comment->user_id != $user->getId()) {
-            return $response->error(403, 'Access denied');
-        }
-
         return $response->json([
             'success' => $success = !!$comment->delete(),
             'message' => $success ? 'Comment deleted.' : 'Comment not deleted.',

@@ -5,7 +5,9 @@ declare(strict_types=1);
 use App\Debug\DatabaseDebugStorage;
 use App\Repositories\IdentityRepository;
 use App\Shared\ApplicationParams;
+use Psr\SimpleCache\CacheInterface;
 use Yiisoft\Auth\IdentityRepositoryInterface;
+use Yiisoft\Cache\Apcu\ApcuCache;
 use Yiisoft\Definitions\Reference;
 use Yiisoft\Session\Session;
 use Yiisoft\Session\SessionInterface;
@@ -34,4 +36,5 @@ return [
         'withSession()' => [Reference::to(SessionInterface::class)]
     ],
     StorageInterface::class => DatabaseDebugStorage::class,
+    CacheInterface::class => ApcuCache::class,
 ];

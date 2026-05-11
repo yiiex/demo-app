@@ -3,10 +3,10 @@
 import DashboardLayout from "@js/layouts/DashboardLayout.vue";
 import {UTable, UTableColumn} from "@js/components/ui/utable/index.ts";
 import {Badge} from "@js/components/ui/badge/index.ts";
-import {UActionList} from "@js/components/ui/uaction/index.ts";
+import {UActionLink, UActionList} from "@js/components/ui/uaction/index.ts";
 import {UFormItem} from "@js/components/ui/uform/index.ts";
 import {Input} from "@js/components/ui/input/index.ts";
-import {Avatar, AvatarImage, AvatarFallback} from "@js/components/ui/avatar/index.ts";
+import UserInfo from "@js/components/user/UserInfo.vue";
 
 defineOptions({
     layout: DashboardLayout,
@@ -35,14 +35,10 @@ defineProps({
         </template>
         <UTableColumn prop="id" label="ID"/>
         <UTableColumn prop="fullName" label="User">
-            <template #default="{ row }">
-                <div class="flex gap-2">
-                    <Avatar>
-                        <AvatarImage :src="row.avatar" />
-                        <AvatarFallback>{{ row.fullName }}</AvatarFallback>
-                    </Avatar>
-                    <div class="my-auto">{{ row.fullName }}</div>
-                </div>
+            <template #default="{ row, index, provider }">
+                <UActionLink :actions="provider.actions[index]" actionName="show" :provideOnly="true">
+                    <UserInfo :user="row"/>
+                </UActionLink>
             </template>
         </UTableColumn>
         <UTableColumn prop="email" label="E-mail"/>
@@ -53,7 +49,7 @@ defineProps({
         </UTableColumn>
         <UTableColumn prop="created_at" label="Created at"/>
         <UTableColumn label="Actions">
-            <template #default="{ row, index }">
+            <template #default="{ row, index, provider }">
                 <UActionList :actions="users.actions[index]" mode="compact"/>
             </template>
         </UTableColumn>

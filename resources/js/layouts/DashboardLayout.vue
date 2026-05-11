@@ -40,6 +40,7 @@ const pageTitle = computed(() => page.props.title || '');
 
 <template>
     <SidebarProvider>
+        <DebugPanel />
         <Head :title="pageTitle"/>
         <Toaster position="top-center" :theme="currentTheme"/>
         <Dialog v-model:open="logoutDialog">
@@ -100,6 +101,5 @@ const pageTitle = computed(() => page.props.title || '');
                 <slot/>
             </div>
         </SidebarInset>
-        <DebugPanel />
     </SidebarProvider>
 </template>

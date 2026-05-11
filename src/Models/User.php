@@ -32,14 +32,18 @@ class User extends BaseModel implements IdentityInterface
 
     public function relations(): array
     {
-        return [];
+        return [
+            'total_time' => [self::STAT, TaskTimeEntry::class, 'user_id'],
+            'week_time' => [self::STAT, TaskTimeEntry::class, 'user_id'],
+            'today_time' => [self::STAT, TaskTimeEntry::class, 'user_id'],
+        ];
     }
 
     public function fullName(string $fullName): static
     {
         $alias = $this->tableAlias;
         $this->query->whereRaw("LOWER(CONCAT($alias.first_name, ' ', $alias.last_name)) LIKE :fullName", [
-            'fullName' => '%'.mb_strtolower(trim($fullName)).'%',
+            'fullName' => '%' . mb_strtolower(trim($fullName)) . '%',
         ]);
         return $this;
     }
@@ -78,7 +82,7 @@ class User extends BaseModel implements IdentityInterface
     {
         return array_merge(parent::jsonSerialize(), [
             'fullName' => $this->fullName,
-            'avatar' => '/images/avatar.webp',
+            'avatar' => null,
         ]);
     }
 }
