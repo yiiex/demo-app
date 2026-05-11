@@ -31,3 +31,5 @@ c3.php
 /public/build
 /public/hot
 .env
+composer.lock
+package-lock.json
