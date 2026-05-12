@@ -4,10 +4,11 @@ import {debounce} from 'lodash'
 import axios from 'axios'
 import {Popover, PopoverContent, PopoverTrigger} from "@js/components/ui/popover";
 import {Button} from "@js/components/ui/button";
-import {CheckIcon, ChevronsUpDownIcon} from 'lucide-vue-next'
+import {CheckIcon, ChevronsUpDownIcon, XIcon} from 'lucide-vue-next'
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem} from "@js/components/ui/command";
 import {SelectListItem} from "@js/components/ui/uform/types.ts";
 import {toast} from "vue-sonner";
+import {Badge} from "@js/components/ui/badge";
 
 const props = withDefaults(defineProps<{
     providerUrl?: string,
@@ -80,24 +81,40 @@ const handleSelect = (item: SelectListItem) => {
     }
 };
 
+const removeItem = (item: SelectListItem) => {
+    if (props.multiple) {
+        const currentValues = Array.isArray(modelValue.value) ? modelValue.value : [];
+        modelValue.value = currentValues.filter(value => value !== item.key);
+        if (modelValue.value.length === 0) {
+            modelValue.value = null;
+        }
+    } else {
+        modelValue.value = null;
+    }
+};
+
 const selectedItems = computed(() => {
     const selectedKeys = Array.isArray(modelValue.value)
         ? modelValue.value
         : (modelValue.value !== null && modelValue.value !== undefined ? [modelValue.value] : []);
     return items.value.filter(item => selectedKeys.includes(item.key));
 });
-
-const selectedLabels = computed(() => {
-    return selectedItems.value.map((i) => i.label).join(', ');
-});
 </script>
 
 <template>
     <Popover v-model:open="open">
         <PopoverTrigger as-child>
-            <Button variant="outline" class="w-full justify-between">
-                {{ selectedLabels || 'Select...' }}
-                <ChevronsUpDownIcon class="ml-2 h-4 w-4 opacity-50"/>
+            <Button variant="outline" class="w-full flex justify-start min-h-9 h-auto">
+                <div class="flex gap-2 flex-wrap whitespace-normal">
+                    <Badge v-if="selectedItems.length" v-for="item in selectedItems" :key="item.key">
+                        {{ item.label }}
+                        <span @click.stop="removeItem(item)" class="cursor-pointer hover:scale-125 transition-transform">
+                            <XIcon class="h-3 w-3 hover:text-destructive"/>
+                        </span>
+                    </Badge>
+                    <span v-else>Select...</span>
+                </div>
+                <ChevronsUpDownIcon class="my-auto ml-auto h-4 w-4 shrink-0"/>
             </Button>
         </PopoverTrigger>
         <PopoverContent class="p-0" align="start">
