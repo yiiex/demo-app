@@ -14,7 +14,7 @@ class Task extends BaseModel
     const string STATUS_PENDING = 'pending';
     const string STATUS_IN_PROGRESS = 'in_progress';
     const string STATUS_DONE = 'done';
-    public ?array $users = null;
+    public ?array $rawUsers = null;
     public ?string $shortName {
         get => $this->name ? mb_strimwidth($this->name, 0, 50, '...') : null;
     }
@@ -50,7 +50,7 @@ class Task extends BaseModel
     public function rules(): array
     {
         return [
-            ['name, project_id, users', 'required', 'on' => 'insert, update'],
+            ['name, project_id, rawUsers', 'required', 'on' => 'insert, update'],
             ['project_id', 'exist', 'className' => Project::class, 'attributeName' => 'id', 'on' => 'insert, update'],
             ['name', 'length', 'max' => 255, 'on' => 'insert, update'],
             ['description', 'length', 'max' => 4000, 'on' => 'insert, update'],
@@ -62,11 +62,12 @@ class Task extends BaseModel
     public function relations(): array
     {
         return [
-            'user_r' => [self::BELONGS_TO, User::class, 'user_id'],
-            'project_r' => [self::BELONGS_TO, Project::class, 'project_id'],
-            'user_links_r' => [self::HAS_MANY, TaskUser::class, 'task_id'],
-            'users_r' => [self::MANY_MANY, User::class, 'task_user(task_id, user_id)'],
+            'user' => [self::BELONGS_TO, User::class, 'user_id'],
+            'project' => [self::BELONGS_TO, Project::class, 'project_id'],
+            'user_links' => [self::HAS_MANY, TaskUser::class, 'task_id'],
+            'users' => [self::MANY_MANY, User::class, 'task_user(task_id, user_id)'],
             'spent_time' => [self::STAT, TaskTimeEntry::class, 'task_id', 'select' => 'SUM(duration)'],
+            'time_entries' => [self::HAS_MANY, TaskTimeEntry::class, 'task_id'],
         ];
     }
 
@@ -93,9 +94,9 @@ class Task extends BaseModel
 
     public function isAssignee(User $user): bool
     {
-        return in_array($user->id, $this->hasRelated('users_r')
-            ? array_column($this->users_r, 'id')
-            : array_column($this->user_links_r, 'user_id'));
+        return in_array($user->id, $this->hasRelated('users')
+            ? array_column($this->users, 'id')
+            : array_column($this->user_links, 'user_id'));
     }
 
     public function attributeLabels(): array
@@ -111,20 +112,22 @@ class Task extends BaseModel
             'created_at' => 'Created at',
             'updated_at' => 'Updated at',
             'project_id' => 'Project',
-            'project_r' => 'Project',
+            'project' => 'Project',
             'users' => 'Assignees',
+            'rawUsers' => 'Assignees',
         ];
     }
 
     public function jsonSerialize(): array
     {
         return parent::jsonSerialize() + [
+                'reference' => $this->reference,
                 'shortName' => $this->shortName,
                 'progress' => $this->progress,
                 'spent_time' => $this->whenLoaded('spent_time'),
-                'project_r' => $this->whenLoaded('project_r'),
-                'users_r' => $this->whenLoaded('users_r', []),
-                'user_links_r' => $this->whenLoaded('user_links_r', []),
+                'project' => $this->whenLoaded('project'),
+                'users' => $this->whenLoaded('users', []),
+                'user_links' => $this->whenLoaded('user_links', []),
             ];
     }
 }

@@ -30,7 +30,7 @@ final class TaskCommentController
         $queryParams = $request->getQueryParams();
 
         $query = TaskComment::queryBuilder()
-            ->with(['user_r'])
+            ->with(['user'])
             ->where('task_id', $task->id)
             ->orderBy('t.id DESC');
 
@@ -67,7 +67,7 @@ final class TaskCommentController
     }
 
     public function edit(
-        #[ModelContext(TaskComment::class, 'comment', ['task_r'], scenario: 'update', policy: TaskCommentPolicy::class)]
+        #[ModelContext(TaskComment::class, 'comment', ['task'], scenario: 'update', policy: TaskCommentPolicy::class)]
         TaskComment           $comment,
         NavManager            $nav,
         Inertia               $inertia,
@@ -77,8 +77,8 @@ final class TaskCommentController
     {
         $nav
             ->setTitle('Edit comment')
-            ->addBreadcrumb($comment->task_r->reference, ['task.show', ['task' => $comment->task_r->id]])
-            ->addBreadcrumb('Edit comment', ['task.edit', ['task' => $comment->task_r->id]]);
+            ->addBreadcrumb($comment->task->reference, ['task.show', ['task' => $comment->task->id]])
+            ->addBreadcrumb('Edit comment', ['task.edit', ['task' => $comment->task->id]]);
         return $inertia->render('TaskComment/Form', [
             'form' => $formData->setModel($comment),
             'saveUrl' => $url->generate('taskComment.update', ['comment' => $comment->id]),
@@ -86,7 +86,7 @@ final class TaskCommentController
     }
 
     public function update(
-        #[ModelContext(TaskComment::class, 'comment', ['task_r'], scenario: 'update', policy: TaskCommentPolicy::class)]
+        #[ModelContext(TaskComment::class, 'comment', ['task'], scenario: 'update', policy: TaskCommentPolicy::class)]
         TaskComment            $comment,
         ServerRequestInterface $request,
         UrlGeneratorInterface  $url,

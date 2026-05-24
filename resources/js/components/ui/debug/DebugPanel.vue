@@ -1,4 +1,3 @@
-<!-- DebugPanel.vue -->
 <script setup lang="ts">
 import {router} from '@inertiajs/vue3';
 import {computed, onMounted, onUnmounted, ref} from 'vue';

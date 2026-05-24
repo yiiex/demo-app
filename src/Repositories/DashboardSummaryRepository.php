@@ -12,7 +12,7 @@ class DashboardSummaryRepository
         return [
             'overdue' => Task::queryBuilder()
                 ->when($user, function(QueryBuilder $query, User $user) {
-                    $query->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb
+                    $query->whereRelation('user_links', fn(ConditionBuilder $cb) => $cb
                         ->where('user_id', $user->getId()));
                 })
                 ->where('t.status', '<>', Task::STATUS_DONE)
@@ -25,7 +25,7 @@ class DashboardSummaryRepository
     public function taskData(?User $user = null): array
     {
         $query = Task::queryBuilder()->when($user, function(QueryBuilder $query, User $user) {
-            $query->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb->where('user_id', $user->getId()));
+            $query->whereRelation('user_links', fn(ConditionBuilder $cb) => $cb->where('user_id', $user->getId()));
         });
 
         return [

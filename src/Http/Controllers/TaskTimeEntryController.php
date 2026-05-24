@@ -30,7 +30,7 @@ final class TaskTimeEntryController
         $queryParams = $request->getQueryParams();
 
         $query = TaskTimeEntry::queryBuilder()
-            ->with(['user_r'])
+            ->with(['user'])
             ->where('task_id', $task->id)
             ->orderBy('t.id DESC');
 
@@ -99,8 +99,8 @@ final class TaskTimeEntryController
     ): ResponseInterface
     {
         $nav
-            ->setTitle($entry->task_r->reference)
-            ->addBreadcrumb($entry->task_r->reference, ['task.show', ['task' => $entry->task_id]])
+            ->setTitle($entry->task->reference)
+            ->addBreadcrumb($entry->task->reference, ['task.show', ['task' => $entry->task_id]])
             ->addBreadcrumb('Edit time entry', ['taskTimeEntry.create', ['task' => $entry->task_id]]);
 
         return $inertia->render('TaskTimeEntry/Form', [
@@ -123,7 +123,7 @@ final class TaskTimeEntryController
             ->validateWithResponse(fn(TaskTimeEntry $entry) => [
                 'success' => $entry->save(false),
                 'message' => 'Time entry updated.',
-                'redirectUrl' => $url->generate('task.show', ['task' => $entry->task_r->id]),
+                'redirectUrl' => $url->generate('task.show', ['task' => $entry->task->id]),
             ]);
     }
 

@@ -21,8 +21,8 @@ class Project extends BaseModel
     {
         return [
             'users_count' => [self::STAT, ProjectUser::class, 'project_id'],
-            'user_links_r' => [self::HAS_MANY, ProjectUser::class, 'project_id'],
-            'owner_r' => [self::BELONGS_TO, User::class, 'user_id'],
+            'user_links' => [self::HAS_MANY, ProjectUser::class, 'project_id'],
+            'owner' => [self::BELONGS_TO, User::class, 'user_id'],
         ];
     }
 
@@ -48,7 +48,7 @@ class Project extends BaseModel
 
     public function isMember(User $user): bool
     {
-        return $this->user_links_r && array_any($this->user_links_r, fn($link) => $link->user_id == $user->id);
+        return $this->user_links && array_any($this->user_links, fn($link) => $link->user_id == $user->id);
     }
 
     public function attributeLabels(): array

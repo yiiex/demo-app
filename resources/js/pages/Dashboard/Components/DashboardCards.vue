@@ -32,7 +32,7 @@ const emit = defineEmits<{
     refresh: [card: 'taskSummary' | 'timeSummary' | 'problemTaskSummary', onComplete: () => void]
 }>()
 
-const { loadings, setLoading } = useDelayedLoading([
+const {loadings, setLoading} = useDelayedLoading([
     'taskSummary',
     'timeSummary',
     'problemTaskSummary',
@@ -53,7 +53,8 @@ const handleRefresh = (card: 'taskSummary' | 'timeSummary' | 'problemTaskSummary
         <!-- Tasks -->
         <div
             class="relative group flex items-center justify-between p-4 rounded-lg bg-card outline outline-offset-2 outline-neutral-200 dark:outline-neutral-800 transition-all duration-700 hover:outline-blue-300 dark:hover:outline-blue-500 hover:shadow-lg hover:shadow-blue-500/5">
-            <div v-if="loadings.taskSummary.value" class="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-xs rounded-lg">
+            <div v-if="loadings.taskSummary.value"
+                 class="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-xs rounded-lg">
                 <Spinner class="size-6"/>
             </div>
             <div class="flex items-center gap-3 min-w-0">
@@ -80,7 +81,8 @@ const handleRefresh = (card: 'taskSummary' | 'timeSummary' | 'problemTaskSummary
         <!-- Hours -->
         <div
             class="relative group flex items-center justify-between p-4 rounded-lg bg-card outline outline-offset-2 outline-neutral-200 dark:outline-neutral-800 transition-all duration-700 hover:outline-green-300 dark:hover:outline-green-600 hover:shadow-lg hover:shadow-green-500/5">
-            <div v-if="loadings.timeSummary.value" class="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-xs rounded-lg">
+            <div v-if="loadings.timeSummary.value"
+                 class="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-xs rounded-lg">
                 <Spinner class="size-6"/>
             </div>
             <div class="flex items-center gap-3 min-w-0">
@@ -89,9 +91,8 @@ const handleRefresh = (card: 'taskSummary' | 'timeSummary' | 'problemTaskSummary
                     <Clock class="size-4 text-green-600 transition-all duration-300 group-hover:rotate-12"/>
                 </div>
                 <div class="min-w-0">
-                    <div class="text-xl font-bold transition-all duration-300 group-hover:text-green-600">
-                        Today: {{ timeSummary.today }}
-                    </div>
+                    <Link class="text-xl font-bold transition-all duration-300 group-hover:text-green-600"
+                          href="/user/timeSheet">Today: {{ timeSummary.today }}</Link>
                     <div class="text-xs text-muted-foreground truncate">
                         {{ timeSummary.week }} this week · {{ timeSummary.total }} total
                     </div>
@@ -111,7 +112,8 @@ const handleRefresh = (card: 'taskSummary' | 'timeSummary' | 'problemTaskSummary
                 ? 'outline-red-200 dark:outline-red-800 hover:outline-red-300 dark:hover:outline-red-500 hover:shadow-lg hover:shadow-red-500/5'
                 : 'outline-neutral-200 dark:outline-neutral-800 hover:outline-neutral-300 dark:hover:outline-neutral-600 hover:shadow-lg hover:shadow-gray-500/5'"
         >
-            <div v-if="loadings.problemTaskSummary.value" class="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-xs rounded-lg">
+            <div v-if="loadings.problemTaskSummary.value"
+                 class="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-xs rounded-lg">
                 <Spinner class="size-6"/>
             </div>
             <div class="flex items-center gap-3 min-w-0">

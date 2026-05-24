@@ -4,11 +4,13 @@ namespace App\Shared\ActionProvider;
 
 abstract class SimpleActionProvider implements ActionProvider
 {
-    public function preparedActions($model, array $exclude = []): array
+    protected ?array $only = null;
+
+    public function preparedActions($model): array
     {
         $actions = [];
         foreach ($this->actions($model) as $action) {
-            if (in_array($action->name, $exclude)) {
+            if ($this->only && !in_array($action->name, $this->only)) {
                 continue;
             }
             $newAction = $this->prepareAction($model, $action);
@@ -17,6 +19,12 @@ abstract class SimpleActionProvider implements ActionProvider
             }
         }
         return $actions;
+    }
+
+    public function only(array $actions): static
+    {
+        $this->only = $actions;
+        return $this;
     }
 
     public function can($model, string $action): bool

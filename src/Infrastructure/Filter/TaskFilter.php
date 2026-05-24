@@ -12,7 +12,7 @@ class TaskFilter extends Filter
 {
     public ?string $search = null;
     public ?bool $myTasks = null;
-    public array $with = ['users_r'];
+    public array $with = ['users'];
 
     public function __construct(protected CurrentUser $user)
     {
@@ -32,8 +32,8 @@ class TaskFilter extends Filter
         if (!$this->user->getIdentity()->can(User::ROLE_ADMIN)) {
             $queryBuilder->where(function (ConditionBuilder $cb) {
                 $cb->where('t.user_id', $this->user->getId())
-                    ->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb
-                        ->where('user_links_r.user_id', $this->user->getId()), 'OR');
+                    ->whereRelation('user_links', fn(ConditionBuilder $cb) => $cb
+                        ->where('user_links.user_id', $this->user->getId()), 'OR');
             });
         }
         return $queryBuilder;
@@ -46,8 +46,8 @@ class TaskFilter extends Filter
     {
         if ($this->myTasks) {
             $queryBuilder
-                ->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb
-                    ->where('user_links_r.user_id', $this->user->getId()));
+                ->whereRelation('user_links', fn(ConditionBuilder $cb) => $cb
+                    ->where('user_links.user_id', $this->user->getId()));
         }
         return $queryBuilder;
     }

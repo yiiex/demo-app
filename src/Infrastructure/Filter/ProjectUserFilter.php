@@ -10,7 +10,7 @@ use Yii1x\ActiveRecord\QueryBuilder;
 class ProjectUserFilter extends Filter
 {
     public ?string $fullName = null;
-    protected array $with = ['user_r', 'project_r'];
+    protected array $with = ['user', 'project'];
 
     #[FilterMethod(
         rules: [['fullName', 'safe', 'on' => 'filter']],
@@ -18,7 +18,7 @@ class ProjectUserFilter extends Filter
     public function search(QueryBuilder $queryBuilder): QueryBuilder
     {
         if ($this->fullName) {
-            $queryBuilder->whereRelation('user_r', fn(ConditionBuilder $q) => $q
+            $queryBuilder->whereRelation('user', fn(ConditionBuilder $q) => $q
                 ->scopes(['fullName' => [$this->fullName]]));
         }
         return $queryBuilder;

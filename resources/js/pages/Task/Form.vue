@@ -43,8 +43,8 @@ const props = defineProps({
                             <UFormItem name="deadline" class="mb-3">
                                 <UDatePicker v-model="model.deadline" type="date-time"/>
                             </UFormItem>
-                            <UFormItem name="users" class="mb-3">
-                                <UCombobox v-model="model.users" provider="user.autocomplete" multiple/>
+                            <UFormItem name="rawUsers" class="mb-3">
+                                <UCombobox v-model="model.rawUsers" provider="user.autocomplete" multiple/>
                             </UFormItem>
                         </CardContent>
                     </Card>

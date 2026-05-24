@@ -22,15 +22,15 @@ class ProjectUser extends BaseModel
     public function relations(): array
     {
         return [
-            'user_r' => [self::BELONGS_TO, User::class, 'user_id'],
-            'project_r' => [self::BELONGS_TO, Project::class, 'project_id'],
+            'user' => [self::BELONGS_TO, User::class, 'user_id'],
+            'project' => [self::BELONGS_TO, Project::class, 'project_id'],
         ];
     }
 
     public function jsonSerialize(): array
     {
         return parent::jsonSerialize() + [
-                'user' => $this->whenLoaded('user_r'),
+                'user' => $this->whenLoaded('user'),
             ];
     }
 
@@ -40,7 +40,7 @@ class ProjectUser extends BaseModel
             'id' => 'ID',
             'user_id' => 'User',
             'project_id' => 'Project ID',
-            'user_r' => 'User',
+            'user' => 'User',
         ];
     }
 }

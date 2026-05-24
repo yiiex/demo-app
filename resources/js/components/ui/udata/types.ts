@@ -10,7 +10,7 @@ export interface PaginationMeta {
 
 export interface DataProvider<T = any> {
     data: T[];
-    meta: PaginationMeta;
+    meta?: PaginationMeta;
 }
 
 export interface CrudDataProvider<T = any> extends DataProvider<T> {

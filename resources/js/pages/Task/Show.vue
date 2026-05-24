@@ -97,7 +97,7 @@ const props = defineProps({
                         <template #default="{index, item, provider}">
                             <Card class="py-2 relative">
                                 <CardContent class="px-3 flex flex-col gap-1">
-                                    <UserInfo :user="item.user_r">
+                                    <UserInfo :user="item.user">
                                         <template #description>
                                             <div class="text-xs text-muted-foreground">{{ item.created_at }}</div>
                                         </template>
@@ -150,9 +150,9 @@ const props = defineProps({
         <div class="w-full lg:w-1/3 flex flex-col gap-4">
             <UDetail class="m-1" :model="task">
                 <UDetailItem label="ID" name="id"/>
-                <UDetailItem label="Project" name="project_r">
+                <UDetailItem label="Project" name="project">
                     <template #default="{model}">
-                        {{ model.project_r?.name }}
+                        {{ model.project?.name }}
                     </template>
                 </UDetailItem>
                 <UDetailItem label="Deadline" name="deadline"/>
@@ -176,8 +176,8 @@ const props = defineProps({
                     <CardTitle>Assignees</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div v-if="task.user_links_r?.length" class="flex flex-col gap-2">
-                        <UserInfo v-for="userLink in task.user_links_r" :key="userLink.id" :user="userLink.user">
+                    <div v-if="task.user_links?.length" class="flex flex-col gap-2">
+                        <UserInfo v-for="userLink in task.user_links" :key="userLink.id" :user="userLink.user">
                             <template #description v-if="userLink.time_summary">
                                 <TimeProgress :value="100" variant="success" class="max-w-[120px]">
                                     {{ userLink.time_summary.total_duration }}

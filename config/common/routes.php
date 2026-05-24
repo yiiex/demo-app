@@ -11,6 +11,7 @@ use App\Http\Controllers\ProjectUserController;
 use App\Http\Controllers\TaskCommentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskTimeEntryController;
+use App\Http\Controllers\TimeSheetController;
 use App\Http\Controllers\UserController;
 use App\Infrastructure\Middlewares\AdminMiddleware;
 use Yiisoft\Auth\Middleware\Authentication;
@@ -23,6 +24,16 @@ return [
     Group::create('/user')->routes(
         Group::create()->middleware(Authentication::class)->routes(
             Route::post('/logout')->action([AuthController::class, 'logout'])->name('user.logout'),
+            Route::get('/index')->action([UserController::class, 'index'])->name('user.index'),
+            Route::get('/timeSheet')->action([TimeSheetController::class, 'index'])->name('timeSheet.index'),
+            Group::create()->middleware(AdminMiddleware::class)->routes(
+                Route::get('/show/{user:\d+}')->action([UserController::class, 'show'])->name('user.show'),
+                Route::get('/create')->action([UserController::class, 'create'])->name('user.create'),
+                Route::post('/store')->action([UserController::class, 'store'])->name('user.store'),
+                Route::get('/edit/{user:\d+}')->action([UserController::class, 'edit'])->name('user.edit'),
+                Route::post('/update/{user:\d+}')->action([UserController::class, 'update'])->name('user.update'),
+                Route::delete('/delete/{user:\d+}')->action([UserController::class, 'destroy'])->name('user.destroy'),
+            ),
         ),
         Route::get('/login')->action([AuthController::class, 'login'])->name('user.login'),
         Route::post('/login')->action([AuthController::class, 'loginPost'])->name('user.login.post'),
@@ -35,17 +46,6 @@ return [
         Group::create('/dashboard')->routes(
             Route::get('/')->action([DashboardController::class, 'index'])->name('dashboard.index'),
             Route::get('/tasks')->action([DashboardController::class, 'tasks'])->name('dashboard.tasks'),
-        ),
-        Group::create('/user')->routes(
-            Route::get('/index')->action([UserController::class, 'index'])->name('user.index'),
-            Group::create()->middleware(AdminMiddleware::class)->routes(
-                Route::get('/show/{user:\d+}')->action([UserController::class, 'show'])->name('user.show'),
-                Route::get('/create')->action([UserController::class, 'create'])->name('user.create'),
-                Route::post('/store')->action([UserController::class, 'store'])->name('user.store'),
-                Route::get('/edit/{user:\d+}')->action([UserController::class, 'edit'])->name('user.edit'),
-                Route::post('/update/{user:\d+}')->action([UserController::class, 'update'])->name('user.update'),
-                Route::delete('/delete/{user:\d+}')->action([UserController::class, 'destroy'])->name('user.destroy'),
-            ),
         ),
         Group::create('/project')->routes(
             Route::get('/index')->action([ProjectController::class, 'index'])->name('project.index'),

@@ -9,6 +9,7 @@ use Yii1x\ActiveRecord\QueryBuilder;
 
 abstract class Filter extends Model implements JsonSerializable
 {
+    private string $_scenario = 'filter';
     protected array $useScopes = [];
     protected array $with = [];
 

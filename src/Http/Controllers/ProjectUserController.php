@@ -61,7 +61,7 @@ final class ProjectUserController
     }
 
     public function destroy(
-        #[ModelContext(ProjectUser::class, 'user', with: ['project_r'], scenario: 'delete', policy: ProjectUserPolicy::class)]
+        #[ModelContext(ProjectUser::class, 'user', with: ['project'], scenario: 'delete', policy: ProjectUserPolicy::class)]
         ProjectUser           $projectUser,
         UrlGeneratorInterface $url,
         ResponseHelper        $response,

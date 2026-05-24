@@ -73,7 +73,7 @@ final class ProjectController
             ->withFilter($userFilter);
 
         $projectUser = new ProjectUser('filter');
-        $projectUser->project_r = $project;
+        $projectUser->project = $project;
         return $inertia->render('Project/Show', [
             'project' => $project,
             'dataProvider' => $dataProvider,

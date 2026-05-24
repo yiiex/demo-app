@@ -35,7 +35,7 @@ class SimpleNavManager implements NavManager
         return $this;
     }
 
-    public function addBreadcrumbRoute(string $title, string $routeName, array $arguments): static
+    public function addBreadcrumbRoute(string $title, string $routeName, array $arguments = []): static
     {
         $this->addBreadcrumb($title, $this->urlGenerator->generate($routeName, $arguments));
         return $this;

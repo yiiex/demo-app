@@ -6,11 +6,9 @@ use App\Http\Attributes\ModelContext;
 use App\Http\Helpers\ResponseHelper;
 use App\Infrastructure\ActionProviders\TaskActions;
 use App\Infrastructure\Filter\TaskFilter;
-use App\Infrastructure\Form\FormData;
-use App\Infrastructure\Form\TaskFormData;
+use App\Infrastructure\Form\{FormData, TaskFormData};
 use App\Infrastructure\View\NavManager;
-use App\Models\Task;
-use App\Models\TaskComment;
+use App\Models\{Task, TaskComment};
 use App\Policies\TaskPolicy;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\ResponseInterface;
@@ -49,7 +47,7 @@ final class TaskController
 
     public function show(
         #[ModelContext(Task::class, 'task', [
-            'project_r', 'user_links_r' => ['with' => ['time_summary', 'user']], 'spent_time',
+            'project', 'user_links' => ['with' => ['time_summary', 'user']], 'spent_time',
         ], scenario: 'view', policy: TaskPolicy::class)]
         Task                  $task,
         Inertia               $inertia,

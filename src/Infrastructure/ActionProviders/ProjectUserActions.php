@@ -27,7 +27,7 @@ class ProjectUserActions extends SimpleActionProvider
             Action::new('create')
                 ->title('Add User')
                 ->variant('outline')
-                ->url(fn(?ProjectUser $projectUser) => $this->urlGenerator->generate('project.user.create', ['project' => $projectUser?->project_r?->id]))
+                ->url(fn(?ProjectUser $projectUser) => $this->urlGenerator->generate('project.user.create', ['project' => $projectUser?->project?->id]))
                 ->visible(fn() => $this->policy->insert($model, $this->user)),
 
             Action::new('destroy')

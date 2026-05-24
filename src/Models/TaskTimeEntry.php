@@ -38,8 +38,8 @@ class TaskTimeEntry extends BaseModel
     public function relations(): array
     {
         return [
-            'task_r' => [self::BELONGS_TO, Task::class, 'task_id'],
-            'user_r' => [self::BELONGS_TO, User::class, 'user_id'],
+            'task' => [self::BELONGS_TO, Task::class, 'task_id'],
+            'user' => [self::BELONGS_TO, User::class, 'user_id'],
         ];
     }
 
@@ -74,7 +74,7 @@ class TaskTimeEntry extends BaseModel
     public function jsonSerialize(): array
     {
         return parent::jsonSerialize() + [
-                'user' => $this->whenLoaded('user_r'),
+                'user' => $this->whenLoaded('user'),
             ];
     }
 }

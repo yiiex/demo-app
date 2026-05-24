@@ -18,17 +18,17 @@ class TaskFormData extends FormData
 
     public function setAttributes(array $attributes): static
     {
-        if (isset($attributes['users']) && is_array($attributes['users'])) {
-            $newUsers = array_diff($attributes['users'], array_column($this->model->user_links_r, 'user_id'));
+        if (isset($attributes['rawUsers']) && is_array($attributes['rawUsers'])) {
+            $newUsers = array_diff($attributes['rawUsers'], array_column($this->model->user_links, 'user_id'));
             foreach ($newUsers as $newUser) {
                 $user = new TaskUser();
                 $user->setAttributes(['user_id' => $newUser]);
-                $this->model->addRelatedRecord('user_links_r', $user, true);
+                $this->model->addRelatedRecord('user_links', $user, true);
             }
         }
         $this->model->onAfterSave = function (Event $event) {
-            foreach ($event->sender->user_links_r as $user) {
-                if (!in_array($user->user_id, $event->sender->users)) {
+            foreach ($event->sender->user_links as $user) {
+                if (!in_array($user->user_id, $event->sender->rawUsers ?: [])) {
                     $user->delete();
                 } elseif ($user->isNewRecord) {
                     $user->task_id = $event->sender->id;
@@ -42,7 +42,7 @@ class TaskFormData extends FormData
     public function getAttributes(): array
     {
         return array_merge(parent::getAttributes(), [
-            'users' => $this->model->user_links_r ? array_column($this->model->user_links_r, 'user_id') : null
+            'rawUsers' => $this->model->user_links ? array_column($this->model->user_links, 'user_id') : null
         ]);
     }
 }

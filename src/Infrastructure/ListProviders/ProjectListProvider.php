@@ -17,7 +17,7 @@ class ProjectListProvider implements ListProvider
     public function fetch(array $context = []): array
     {
         $query = Project::queryBuilder()->limit(50);
-        $query->whereRelation('user_links_r', fn(ConditionBuilder $cb) => $cb->where('user_links_r.user_id', $this->currentUser->getId()));
+        $query->whereRelation('user_links', fn(ConditionBuilder $cb) => $cb->where('user_links.user_id', $this->currentUser->getId()));
         if (isset($context['search']) && is_string($context['search'])) {
             $query->like('name', $context['search']);
         } else if (isset($context['value'])) {

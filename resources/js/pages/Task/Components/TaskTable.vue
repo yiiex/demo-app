@@ -51,9 +51,9 @@ defineProps({
                 <TaskStatus :task="row"/>
             </template>
         </UTableColumn>
-        <UTableColumn prop="users_r" label="Assignees">
+        <UTableColumn prop="users" label="Assignees">
             <template #default="{ row, index }">
-                <UserGroupAvatar :users="row.users_r"/>
+                <UserGroupAvatar :users="row.users"/>
             </template>
         </UTableColumn>
         <UTableColumn prop="estimated_time" label="Estimated time">

@@ -42,7 +42,7 @@ class TaskUser extends BaseModel
             'id' => 'ID',
             'user_id' => 'User',
             'task_id' => 'Task ID',
-            'user_r' => 'User',
+            'user' => 'User',
         ];
     }
 }
