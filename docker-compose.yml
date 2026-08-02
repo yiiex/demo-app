@@ -23,6 +23,7 @@ services:
             - db
         environment:
           - PHP_IDE_CONFIG=serverName=app
+          - XDEBUG_MODE=${XDEBUG_MODE:-off}
     db:
         container_name: app_db
         image: mysql:8.0
