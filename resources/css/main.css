@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "vue-sonner/style.css";
 
 @theme {
     --color-main-50: oklch(0.98 0 0);

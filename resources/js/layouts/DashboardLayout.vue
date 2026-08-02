@@ -22,8 +22,6 @@ import {
 } from "@js/components/ui/dialog/index.ts";
 import {Button} from "@js/components/ui/button/index.ts";
 import {Spinner} from "@js/components/ui/spinner/index.ts";
-
-import 'vue-sonner/style.css';
 import {Toaster} from "@js/components/ui/sonner/index.ts";
 import {useAuth} from "@js/composables/useAuth.ts";
 import {useTheme} from "@js/composables/useTheme.ts";
