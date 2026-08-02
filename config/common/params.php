@@ -8,17 +8,19 @@ use App\Shared\ApplicationParams;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Assets\AssetManager;
 use Yiisoft\Definitions\Reference;
-use Yiisoft\Middleware\Dispatcher\Debug\MiddlewareCollector;
 use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\Yii\Debug\Collector\EventCollector;
-use Yiisoft\Yii\Debug\Collector\HttpClientCollector;
 use Yiisoft\Yii\Debug\Collector\Web\RequestCollector;
 use Yiisoft\Yii\Debug\Collector\Web\WebAppInfoCollector;
 use Yiisoft\Yii\View\Renderer\CsrfViewInjection;
 
 return [
     'application' => require __DIR__ . '/application.php',
+    'db' => [
+        'dsn' => $_ENV['DB_DSN'] ?? null,
+        'username' => $_ENV['DB_USERNAME'] ?? null,
+        'password' => $_ENV['DB_PASSWORD'] ?? null,
+    ],
     'session' => [
         'options' => [
             'cookie_secure' => false,

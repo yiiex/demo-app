@@ -43,9 +43,9 @@
         "psr/http-server-handler": "^1.0.2",
         "psr/log": "^3.0.2",
         "symfony/console": "^7.4.1",
-        "yii1x/active-record": "dev-master",
-        "yii1x/validator": "dev-master",
-        "yiiex/inertiajs": "dev-master",
+        "yii1x/active-record": "^0.1.0",
+        "yii1x/validator": "^0.1.0",
+        "yiiex/inertiajs": "^0.1.0",
         "yiisoft/aliases": "^3.1.1",
         "yiisoft/assets": "^5.1.2",
         "yiisoft/cache-apcu": "^1.1.0",
@@ -112,7 +112,7 @@
             "composer/installers": true
         }
     },
-    "repositories": [
+    "_repositories": [
         {
             "type": "path",
             "url": "packages/yii1x/validator",
