@@ -2,7 +2,7 @@
 import {Badge} from "@js/components/ui/badge/index.ts";
 import {computed} from "vue";
 import {CircleIcon, LoaderIcon} from "@lucide/vue";
-import {CircleCheckIcon} from "lucide-vue-next";
+import {CircleCheckIcon} from "@lucide/vue";
 
 const props = defineProps({
     task: {

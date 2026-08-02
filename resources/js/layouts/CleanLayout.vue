@@ -7,7 +7,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from '@js/components/ui/dropdown-menu';
-import {Monitor, Moon, Sun} from 'lucide-vue-next';
+import {Monitor, Moon, Sun} from '@lucide/vue';
 import {computed} from 'vue';
 import {Head, usePage} from "@inertiajs/vue3";
 import {Toaster} from "@js/components/ui/sonner";

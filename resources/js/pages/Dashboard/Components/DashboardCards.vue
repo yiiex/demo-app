@@ -1,6 +1,6 @@
 // DashboardCards.vue
 <script setup lang="ts">
-import {AlertCircle, Clock, ListTodo, RefreshCw} from 'lucide-vue-next'
+import {AlertCircle, Clock, ListTodo, RefreshCw} from '@lucide/vue'
 import {Button} from '@js/components/ui/button'
 import {Spinner} from "@js/components/ui/spinner";
 import {useDelayedLoading} from "@js/composables/useDelayedRef.ts";

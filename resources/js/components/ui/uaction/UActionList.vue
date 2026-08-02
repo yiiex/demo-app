@@ -17,7 +17,7 @@ import {
     DialogHeader,
     DialogTitle
 } from '@/js/components/ui/dialog';
-import {MoreHorizontal} from 'lucide-vue-next';
+import {MoreHorizontal} from '@lucide/vue';
 import {Action} from "@js/components/ui/uaction/types.ts";
 import {toast} from "vue-sonner";
 import axios from "axios";

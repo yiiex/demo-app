@@ -11,7 +11,7 @@ import {
     SheetTrigger,
 } from '@js/components/ui/sheet/index.ts';
 import {ScrollArea} from '@js/components/ui/scroll-area/index.ts';
-import {Bug, Clock, Database, Cpu, X, Maximize2, Minimize2} from 'lucide-vue-next';
+import {Bug, Clock, Database, Cpu, X, Maximize2, Minimize2} from '@lucide/vue';
 import {formatBytes, formatMs} from "@js/components/ui/debug";
 import axios from "axios";
 import {DebugDetail} from "@js/components/ui/debug";

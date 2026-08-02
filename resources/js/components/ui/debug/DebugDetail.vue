@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {Cpu, Database, Globe, Route} from "lucide-vue-next";
+import {Cpu, Database, Globe, Route} from "@lucide/vue";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@js/components/ui/accordion/index.ts";
 import {computed, ref} from "vue";
 import {formatBytes, formatMs, highlightSql} from "@js/components/ui/debug";

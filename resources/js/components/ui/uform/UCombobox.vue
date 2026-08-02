@@ -4,7 +4,7 @@ import {debounce} from 'lodash'
 import axios from 'axios'
 import {Popover, PopoverContent, PopoverTrigger} from "@js/components/ui/popover";
 import {Button} from "@js/components/ui/button";
-import {CheckIcon, ChevronsUpDownIcon, XIcon} from 'lucide-vue-next'
+import {CheckIcon, ChevronsUpDownIcon, XIcon} from '@lucide/vue'
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem} from "@js/components/ui/command";
 import {SelectListItem} from "@js/components/ui/uform/types.ts";
 import {toast} from "vue-sonner";

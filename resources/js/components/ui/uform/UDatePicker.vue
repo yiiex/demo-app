@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {CalendarDate, getLocalTimeZone, today} from '@internationalized/date'
-import {CalendarIcon} from 'lucide-vue-next'
+import {CalendarIcon} from '@lucide/vue'
 import {computed} from 'vue'
 import {Button} from '@/js/components/ui/button'
 import {Calendar} from '@/js/components/ui/calendar'

@@ -9,7 +9,7 @@ import {
     Moon,
     Palette,
     Sun,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import {
     DropdownMenu,
     DropdownMenuContent,
