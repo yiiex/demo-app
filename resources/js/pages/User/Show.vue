@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <UDetail :model="user">
             <UDetailItem label="ID" name="id"/>
             <UDetailItem label="Full Name" name="fullName"/>

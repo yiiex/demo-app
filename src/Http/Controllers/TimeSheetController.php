@@ -8,6 +8,7 @@ use App\Infrastructure\Filter\TimeSheetFilter;
 use App\Infrastructure\View\NavManager;
 use App\Models\Task;
 use App\Models\TaskTimeEntry;
+use App\Shared\ActionProvider\Action;
 use App\Shared\DataProvider\CrudDataProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii1x\ActiveRecord\ConditionBuilder;
@@ -51,7 +52,7 @@ final class TimeSheetController
             ->findAll();
 
         $taskDataProvider = new CrudDataProvider(Task::queryBuilder(), 20, $queryParams['page'] ?? 1)
-            ->withActions($actions->only(['show']))
+            ->withActions($actions->filter(fn(Action $action) => $action->name == 'show'))
             ->withFilter($filter);
 
         return $inertia->render('TimeSheet/Index', [

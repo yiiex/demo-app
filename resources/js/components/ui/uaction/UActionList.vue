@@ -142,7 +142,7 @@ const hasActions = computed(() => {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-        <div v-else class="flex gap-2">
+        <div v-else class="flex flex-wrap gap-2">
             <Button
                 v-for="action in visibleActions"
                 :key="action.title"

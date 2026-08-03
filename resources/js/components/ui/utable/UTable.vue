@@ -57,14 +57,16 @@ const handlePageChange = (page: number) => {
             <Spinner class="size-8"/>
         </div>
         <div v-if="hasFilterSlot" class="p-3">
-            <div class="flex justify-between">
-                <div class="" v-if="url">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
+                <div class="flex flex-wrap gap-2 items-center w-full md:w-auto md:flex-1 md:order-2 md:justify-end md:pt-1 order-first">
+                    <slot name="buttons"/>
+                </div>
+                <div class="w-full md:w-[60%] md:order-1" v-if="url">
                     <UForm :url="url" :model="filterModel" :attribute-labels="dataProvider?.filter?.attributeLabels"
                            :safe-attributes="dataProvider?.filter?.safeAttributes">
                         <slot name="filter" :model="filterModel"/>
                     </UForm>
                 </div>
-                <slot name="buttons"/>
             </div>
         </div>
         <Table>

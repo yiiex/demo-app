@@ -7,6 +7,7 @@ import {UActionList} from "@js/components/ui/uaction/index.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@js/components/ui/avatar/index.ts";
 import {UFormItem} from "@js/components/ui/uform/index.ts";
 import {Input} from "@js/components/ui/input/index.ts";
+import UserInfo from "@js/components/user/UserInfo.vue";
 
 defineOptions({
     layout: DashboardLayout,
@@ -55,13 +56,11 @@ const props = defineProps({
                 <UTableColumn prop="id" label="ID"/>
                 <UTableColumn prop="fullName" label="User">
                     <template #default="{ row }">
-                        <div class="flex gap-2" v-if="row.user">
-                            <Avatar>
-                                <AvatarImage :src="row.user.avatar"/>
-                                <AvatarFallback>{{ row.user.fullName }}</AvatarFallback>
-                            </Avatar>
-                            <div class="my-auto">{{ row.user.fullName }}</div>
-                        </div>
+                        <UserInfo :user="row.user">
+                            <template #description>
+                                <div class="text-xs text-muted-foreground">{{ row.created_at }}</div>
+                            </template>
+                        </UserInfo>
                     </template>
                 </UTableColumn>
                 <UTableColumn prop="created_at" label="Member since"/>

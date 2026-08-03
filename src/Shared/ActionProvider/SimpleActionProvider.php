@@ -2,17 +2,17 @@
 
 namespace App\Shared\ActionProvider;
 
+use Closure;
+
 abstract class SimpleActionProvider implements ActionProvider
 {
     protected ?array $only = null;
+    protected ?Closure $filter = null;
 
     public function preparedActions($model): array
     {
         $actions = [];
-        foreach ($this->actions($model) as $action) {
-            if ($this->only && !in_array($action->name, $this->only)) {
-                continue;
-            }
+        foreach ($this->filter ? array_filter($this->actions($model), $this->filter) : $this->actions($model) as $action) {
             $newAction = $this->prepareAction($model, $action);
             if ($newAction->can()) {
                 $actions[] = $newAction->toArray();
@@ -21,9 +21,9 @@ abstract class SimpleActionProvider implements ActionProvider
         return $actions;
     }
 
-    public function only(array $actions): static
+    public function filter(Closure $filter): static
     {
-        $this->only = $actions;
+        $this->filter = $filter;
         return $this;
     }
 

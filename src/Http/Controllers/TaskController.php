@@ -6,6 +6,7 @@ use App\Http\Attributes\ModelContext;
 use App\Http\Helpers\ResponseHelper;
 use App\Infrastructure\ActionProviders\TaskActions;
 use App\Infrastructure\Filter\TaskFilter;
+use App\Shared\ActionProvider\Action;
 use App\Infrastructure\Form\{FormData, TaskFormData};
 use App\Infrastructure\View\NavManager;
 use App\Models\{Task, TaskComment};
@@ -65,7 +66,9 @@ final class TaskController
 
         return $inertia->render('Task/Show', [
             'task' => $task,
-            'actions' => $actions->preparedActions($task, ['show']),
+            'actions' => $actions
+                ->filter(fn(Action $action) => $action->name != 'show')
+                ->preparedActions($task),
             'timeEntryUrl' => $url->generate('taskTimeEntry.index', ['task' => $task->id]),
             'commentForm' => $commentForm->setModel($comment),
             'commentSaveUrl' => $url->generate('taskComment.store', ['task' => $task->id]),
